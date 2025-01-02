@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from './routes';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -9,11 +9,16 @@ const App: React.FC = () => {
             <Routes>
                 {publicRoutes.map((route) => {
                     const Page = route.element;
+                    const Layout = route.layout || Fragment;
                     return (
                         <Route
                             key={route.path}
                             path={route.path}
-                            element={<Page />}
+                            element={
+                                <Layout>
+                                    <Page />
+                                </Layout>
+                            }
                         />
                     );
                 })}
