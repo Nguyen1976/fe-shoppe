@@ -12,7 +12,7 @@ interface AuthLayout {
 const AthLayout: React.FC<AuthLayout> = ({ children }) => { 
     const location = useLocation();
     const titleHeader =
-        location.pathname === config.routes.signIn ? 'Đăng ký' : 'Đăng nhập';
+        location.pathname !== config.routes.signIn ? 'Đăng ký' : 'Đăng nhập';
 
     return (
         <FooterLayout>
