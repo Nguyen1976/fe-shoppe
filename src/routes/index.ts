@@ -6,11 +6,13 @@ import SignUp from '@/pages/user/SignUp';
 import Profile from '@/pages/user/Profile';
 import Admin from '@/pages/admin/Admin';
 import AuthLayout from '@/layouts/AuthLayout';
+import DefaultLayout from '~/layouts/DefaultLayout';
 
 export const publicRoutes = [
     {
         path: config.routes.home,
         element: Home,
+        layout: DefaultLayout,
     },
     {
         path: config.routes.signIn,
@@ -18,7 +20,7 @@ export const publicRoutes = [
         layout: AuthLayout,
     },
     {
-        path: config.routes.signIn,
+        path: config.routes.signUp,
         element: SignUp,
         layout: AuthLayout,
     },

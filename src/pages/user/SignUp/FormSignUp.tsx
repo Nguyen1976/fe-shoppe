@@ -1,22 +1,26 @@
-// import React from 'react';
 import { useForm } from 'react-hook-form';
 
 interface IFormInput {
+    name: string;
     email: string;
     password: string;
+    confirmPassword: string;
 }
 
-function FormSignIn() {
+export default function FormSignUp() {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        watch,
     } = useForm<IFormInput>();
+    const password = watch('password');
 
     const onSubmit = (data: IFormInput) => {
         console.log(data);
         //call api login
     };
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-4">
@@ -38,7 +42,7 @@ function FormSignIn() {
                     </p>
                 )}
             </div>
-            <div className="mt-5">
+            <div className="mt-4">
                 <input
                     className={`w-full border-[1px] border-[#adadad] p-2 outline-custom
                   ${errors.password ? 'bg-red-100 outline-red-300' : ''}`}
@@ -47,13 +51,32 @@ function FormSignIn() {
                         required: 'Hãy nhập mật khẩu',
                         pattern: {
                             value: /^.{6,16}$/,
-                            message: 'Mật khẩu phải dài từ 6 đến 16 ký tự',
+                            message: 'Mật khẩu không hợp lệ',
                         },
                     })}
                 />
                 {errors.password && (
                     <p className="text-xs text-[#f33a58] ml-2 select-none">
                         {errors.password?.message as string}
+                    </p>
+                )}
+            </div>
+            <div className="mt-4">
+                <input
+                    className={`w-full border-[1px] border-[#adadad] p-2 outline-custom
+                  ${
+                      errors.confirmPassword ? 'bg-red-100 outline-red-300' : ''
+                  }`}
+                    placeholder="Nhập lại mật khẩu"
+                    {...register('confirmPassword', {
+                        required: 'Hãy nhập lại mật khẩu',
+                        validate: (value) =>
+                            value === password || 'Mật khẩu không khớp',
+                    })}
+                />
+                {errors.confirmPassword && (
+                    <p className="text-xs text-[#f33a58] ml-2 select-none">
+                        {errors.confirmPassword?.message as string}
                     </p>
                 )}
             </div>
@@ -70,5 +93,3 @@ function FormSignIn() {
         </form>
     );
 }
-
-export default FormSignIn;
